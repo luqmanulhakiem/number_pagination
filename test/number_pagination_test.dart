@@ -16,7 +16,7 @@ void main() {
         },
         currentPage: currentPage,
         totalPages: 100,
-        visiblePagesCount: 11,
+        // visiblePagesCount: 11,
       );
     });
 
