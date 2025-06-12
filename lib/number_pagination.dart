@@ -17,7 +17,7 @@ class NumberPagination extends StatelessWidget {
     required this.onPageChanged,
     required this.totalPages,
     required this.currentPage,
-    this.visiblePagesCount = 10,
+    this.visiblePagesCount = 3,
     this.fontSize = 15,
     this.fontFamily,
     this.buttonElevation = 5,
@@ -212,7 +212,8 @@ class NumberPagination extends StatelessWidget {
           return Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              if (totalPages > 3 && currentPage > 3) ...[
+              if (totalPages > visiblePagesCount &&
+                  currentPage > visiblePagesCount) ...[
                 NumberButton(
                   number: 1,
                   buttonElevation: buttonElevation,
@@ -272,8 +273,9 @@ class NumberPagination extends StatelessWidget {
                     width: betweenNumberButtonSpacing,
                   ),
               ],
-              if (totalPages > 3 && currentPage < totalPages) ...[
-                if (currentPage <= totalPages - 2)
+              if (totalPages > visiblePagesCount &&
+                  currentPage < totalPages - visiblePagesCount) ...[
+                if (currentPage <= totalPages - (visiblePagesCount - 1))
                   NumberButton(
                     number: 0,
                     dot: "...",
