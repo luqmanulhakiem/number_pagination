@@ -50,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
               selectedPageNumber = pageNumber;
             });
           },
-          visiblePagesCount: 15,
+          // visiblePagesCount: 15,
           totalPages: 100,
           currentPage: selectedPageNumber,
           // enableInteraction: false,

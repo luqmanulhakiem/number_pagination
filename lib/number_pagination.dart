@@ -10,6 +10,8 @@ import 'src/page_number_provider.dart';
 /// This widget allows users to navigate through pages using numbered buttons
 /// and control buttons (first, previous, next, last). It's highly customizable
 /// in terms of appearance and behavior.
+const visiblePagesCount = 3;
+
 class NumberPagination extends StatelessWidget {
   /// Creates a NumberPagination widget.
   const NumberPagination({
@@ -17,7 +19,6 @@ class NumberPagination extends StatelessWidget {
     required this.onPageChanged,
     required this.totalPages,
     required this.currentPage,
-    this.visiblePagesCount = 3,
     this.fontSize = 15,
     this.fontFamily,
     this.buttonElevation = 5,
@@ -50,9 +51,6 @@ class NumberPagination extends StatelessWidget {
 
   /// Currently displayed page number.
   final int currentPage;
-
-  /// Number of page buttons to display at once.
-  final int visiblePagesCount;
 
   /// Font size for the page numbers.
   final double fontSize;
@@ -275,7 +273,7 @@ class NumberPagination extends StatelessWidget {
               ],
               if (totalPages > visiblePagesCount &&
                   currentPage < totalPages - visiblePagesCount) ...[
-                if (currentPage <= totalPages - (visiblePagesCount - 1))
+                if (currentPage < totalPages - visiblePagesCount)
                   NumberButton(
                     number: 0,
                     dot: "...",
@@ -294,23 +292,24 @@ class NumberPagination extends StatelessWidget {
                     buttonUnSelectedBorderColor: buttonUnSelectedBorderColor,
                     enableInteraction: true,
                   ),
-                NumberButton(
-                  number: totalPages,
-                  buttonElevation: buttonElevation,
-                  buttonRadius: buttonRadius,
-                  fontSize: fontSize,
-                  fontFamily: fontFamily ?? '',
-                  onSelect: (c, number) => _changePage(c, number),
-                  fixedSize: numberButtonSize,
-                  selectedTextColor: selectedNumberColor,
-                  unSelectedTextColor: unSelectedNumberColor,
-                  selectedButtonColor: selectedButtonColor,
-                  unSelectedButtonColor: unSelectedButtonColor,
-                  selectedNumberFontWeight: selectedNumberFontWeight,
-                  buttonSelectedBorderColor: buttonSelectedBorderColor,
-                  buttonUnSelectedBorderColor: buttonUnSelectedBorderColor,
-                  enableInteraction: enableInteraction,
-                ),
+                if (currentPage <= totalPages - 1)
+                  NumberButton(
+                    number: totalPages,
+                    buttonElevation: buttonElevation,
+                    buttonRadius: buttonRadius,
+                    fontSize: fontSize,
+                    fontFamily: fontFamily ?? '',
+                    onSelect: (c, number) => _changePage(c, number),
+                    fixedSize: numberButtonSize,
+                    selectedTextColor: selectedNumberColor,
+                    unSelectedTextColor: unSelectedNumberColor,
+                    selectedButtonColor: selectedButtonColor,
+                    unSelectedButtonColor: unSelectedButtonColor,
+                    selectedNumberFontWeight: selectedNumberFontWeight,
+                    buttonSelectedBorderColor: buttonSelectedBorderColor,
+                    buttonUnSelectedBorderColor: buttonUnSelectedBorderColor,
+                    enableInteraction: enableInteraction,
+                  ),
               ],
             ],
           );
