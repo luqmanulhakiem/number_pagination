@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'number_page_container.dart';
 
 class NumberButton extends StatelessWidget {
@@ -19,9 +20,12 @@ class NumberButton extends StatelessWidget {
     this.buttonUnSelectedBorderColor,
     this.enableInteraction = true,
     super.key,
+    this.dot,
   });
 
   final int number;
+  final String? dot;
+
   final double buttonElevation;
   final double buttonRadius;
   final double fontSize;
@@ -72,10 +76,10 @@ class NumberButton extends StatelessWidget {
                   onSelect(context, number);
                 },
                 child: Text(
-                  '$number',
-                  style: TextStyle(
+                  dot ?? '$number',
+                  style: GoogleFonts.getFont(
+                    fontFamily,
                     fontSize: fontSize,
-                    fontFamily: fontFamily,
                     color: selected ? selectedTextColor : unSelectedTextColor,
                     fontWeight: selected ? selectedNumberFontWeight : null,
                   ),

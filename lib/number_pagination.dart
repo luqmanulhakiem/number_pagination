@@ -128,7 +128,7 @@ class NumberPagination extends StatelessWidget {
     return NumberPageContainer(
       pageService: pageService,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           _buildNavigationButtons(pageService),
           SizedBox(width: sectionSpacing),
@@ -147,31 +147,52 @@ class NumberPagination extends StatelessWidget {
       listenable: pageService,
       builder: (_, __) => Row(
         children: [
-          ControlButton(
-            buttonElevation,
-            buttonRadius,
-            isForward ? nextPageIcon : firstPageIcon,
-            isForward
-                ? pageService.currentPage != totalPages
-                : pageService.currentPage != 1,
-            (c) => _changePage(c, isForward ? pageService.currentPage + 1 : 1),
-            controlButtonSize,
-            controlButtonColor,
-            enableInteraction,
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: buttonUnSelectedBorderColor ?? Colors.transparent,
+                width: 1, // Ganti dengan ketebalan border yang diinginkan
+              ),
+              borderRadius: BorderRadius.circular(buttonRadius +
+                  2), // Menambahkan sudut melengkung jika diperlukan
+            ),
+            child: ControlButton(
+              buttonElevation,
+              buttonRadius,
+              isForward ? nextPageIcon : firstPageIcon,
+              isForward
+                  ? pageService.currentPage != totalPages
+                  : pageService.currentPage != 1,
+              (c) =>
+                  _changePage(c, isForward ? pageService.currentPage + 1 : 1),
+              controlButtonSize,
+              controlButtonColor,
+              enableInteraction,
+            ),
           ),
           SizedBox(width: navigationButtonSpacing),
-          ControlButton(
-            buttonElevation,
-            buttonRadius,
-            isForward ? lastPageIcon : previousPageIcon,
-            isForward
-                ? pageService.currentPage != totalPages
-                : pageService.currentPage != 1,
-            (c) => _changePage(
-                c, isForward ? totalPages : pageService.currentPage - 1),
-            controlButtonSize,
-            controlButtonColor,
-            enableInteraction,
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: buttonUnSelectedBorderColor ?? Colors.transparent,
+                width: 1, // Ganti dengan ketebalan border yang diinginkan
+              ),
+              borderRadius: BorderRadius.circular(buttonRadius +
+                  2), // Menambahkan sudut melengkung jika diperlukan
+            ),
+            child: ControlButton(
+              buttonElevation,
+              buttonRadius,
+              isForward ? lastPageIcon : previousPageIcon,
+              isForward
+                  ? pageService.currentPage != totalPages
+                  : pageService.currentPage != 1,
+              (c) => _changePage(
+                  c, isForward ? totalPages : pageService.currentPage - 1),
+              controlButtonSize,
+              controlButtonColor,
+              enableInteraction,
+            ),
           ),
         ],
       ),
@@ -191,6 +212,43 @@ class NumberPagination extends StatelessWidget {
           return Row(
             mainAxisSize: MainAxisSize.min,
             children: [
+              if (totalPages > 3 && currentPage > 3) ...[
+                NumberButton(
+                  number: 1,
+                  buttonElevation: buttonElevation,
+                  buttonRadius: buttonRadius,
+                  fontSize: fontSize,
+                  fontFamily: fontFamily ?? '',
+                  onSelect: (c, number) => _changePage(c, number),
+                  fixedSize: numberButtonSize,
+                  selectedTextColor: selectedNumberColor,
+                  unSelectedTextColor: unSelectedNumberColor,
+                  selectedButtonColor: selectedButtonColor,
+                  unSelectedButtonColor: unSelectedButtonColor,
+                  selectedNumberFontWeight: selectedNumberFontWeight,
+                  buttonSelectedBorderColor: buttonSelectedBorderColor,
+                  buttonUnSelectedBorderColor: buttonUnSelectedBorderColor,
+                  enableInteraction: enableInteraction,
+                ),
+                NumberButton(
+                  number: 0,
+                  dot: "...",
+                  buttonElevation: buttonElevation,
+                  buttonRadius: buttonRadius,
+                  fontSize: fontSize,
+                  fontFamily: fontFamily ?? '',
+                  onSelect: (c, number) {},
+                  fixedSize: numberButtonSize,
+                  selectedTextColor: selectedNumberColor,
+                  unSelectedTextColor: unSelectedNumberColor,
+                  selectedButtonColor: selectedButtonColor,
+                  unSelectedButtonColor: unSelectedButtonColor,
+                  selectedNumberFontWeight: selectedNumberFontWeight,
+                  buttonSelectedBorderColor: buttonSelectedBorderColor,
+                  buttonUnSelectedBorderColor: buttonUnSelectedBorderColor,
+                  enableInteraction: true,
+                ),
+              ],
               for (var i = rangeStart; i < rangeEnd; i++) ...[
                 NumberButton(
                   number: i + 1,
@@ -213,6 +271,44 @@ class NumberPagination extends StatelessWidget {
                   SizedBox(
                     width: betweenNumberButtonSpacing,
                   ),
+              ],
+              if (totalPages > 3 && currentPage < totalPages) ...[
+                if (currentPage <= totalPages - 2)
+                  NumberButton(
+                    number: 0,
+                    dot: "...",
+                    buttonElevation: buttonElevation,
+                    buttonRadius: buttonRadius,
+                    fontSize: fontSize,
+                    fontFamily: fontFamily ?? '',
+                    onSelect: (c, number) {},
+                    fixedSize: numberButtonSize,
+                    selectedTextColor: selectedNumberColor,
+                    unSelectedTextColor: unSelectedNumberColor,
+                    selectedButtonColor: selectedButtonColor,
+                    unSelectedButtonColor: unSelectedButtonColor,
+                    selectedNumberFontWeight: selectedNumberFontWeight,
+                    buttonSelectedBorderColor: buttonSelectedBorderColor,
+                    buttonUnSelectedBorderColor: buttonUnSelectedBorderColor,
+                    enableInteraction: true,
+                  ),
+                NumberButton(
+                  number: totalPages,
+                  buttonElevation: buttonElevation,
+                  buttonRadius: buttonRadius,
+                  fontSize: fontSize,
+                  fontFamily: fontFamily ?? '',
+                  onSelect: (c, number) => _changePage(c, number),
+                  fixedSize: numberButtonSize,
+                  selectedTextColor: selectedNumberColor,
+                  unSelectedTextColor: unSelectedNumberColor,
+                  selectedButtonColor: selectedButtonColor,
+                  unSelectedButtonColor: unSelectedButtonColor,
+                  selectedNumberFontWeight: selectedNumberFontWeight,
+                  buttonSelectedBorderColor: buttonSelectedBorderColor,
+                  buttonUnSelectedBorderColor: buttonUnSelectedBorderColor,
+                  enableInteraction: enableInteraction,
+                ),
               ],
             ],
           );
