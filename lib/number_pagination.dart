@@ -272,7 +272,7 @@ class NumberPagination extends StatelessWidget {
                   ),
               ],
               if (totalPages > visiblePagesCount &&
-                  currentPage < totalPages - visiblePagesCount) ...[
+                  currentPage < totalPages + 1) ...[
                 if (currentPage < totalPages - visiblePagesCount)
                   NumberButton(
                     number: 0,
