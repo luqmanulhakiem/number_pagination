@@ -272,49 +272,66 @@ class NumberPagination extends StatelessWidget {
                   ),
               ],
               if (totalPages > visiblePagesCount &&
-                  currentPage < totalPages + 1) ...[
-                if (currentPage < totalPages - visiblePagesCount)
-                  NumberButton(
-                    number: 0,
-                    dot: "...",
-                    buttonElevation: buttonElevation,
-                    buttonRadius: buttonRadius,
-                    fontSize: fontSize,
-                    fontFamily: fontFamily ?? '',
-                    onSelect: (c, number) {},
-                    fixedSize: numberButtonSize,
-                    selectedTextColor: selectedNumberColor,
-                    unSelectedTextColor: unSelectedNumberColor,
-                    selectedButtonColor: selectedButtonColor,
-                    unSelectedButtonColor: unSelectedButtonColor,
-                    selectedNumberFontWeight: selectedNumberFontWeight,
-                    buttonSelectedBorderColor: buttonSelectedBorderColor,
-                    buttonUnSelectedBorderColor: buttonUnSelectedBorderColor,
-                    enableInteraction: true,
-                  ),
-                if (currentPage <= totalPages - 1)
-                  NumberButton(
-                    number: totalPages,
-                    buttonElevation: buttonElevation,
-                    buttonRadius: buttonRadius,
-                    fontSize: fontSize,
-                    fontFamily: fontFamily ?? '',
-                    onSelect: (c, number) => _changePage(c, number),
-                    fixedSize: numberButtonSize,
-                    selectedTextColor: selectedNumberColor,
-                    unSelectedTextColor: unSelectedNumberColor,
-                    selectedButtonColor: selectedButtonColor,
-                    unSelectedButtonColor: unSelectedButtonColor,
-                    selectedNumberFontWeight: selectedNumberFontWeight,
-                    buttonSelectedBorderColor: buttonSelectedBorderColor,
-                    buttonUnSelectedBorderColor: buttonUnSelectedBorderColor,
-                    enableInteraction: enableInteraction,
-                  ),
+                  currentPage < totalPages) ...[
+                // Ganjil
+                if (totalPages % 3 != 0) ...[
+                  _buildSeparatorDot(),
+                  _buildButton(),
+                ],
+
+                // Genap
+                if (totalPages % 3 == 0 &&
+                    currentPage != (totalPages - 1) &&
+                    currentPage != (totalPages - 2)) ...[
+                  _buildSeparatorDot(),
+                  _buildButton(),
+                ],
               ],
             ],
           );
         },
       ),
+    );
+  }
+
+  NumberButton _buildButton() {
+    return NumberButton(
+      number: totalPages,
+      buttonElevation: buttonElevation,
+      buttonRadius: buttonRadius,
+      fontSize: fontSize,
+      fontFamily: fontFamily ?? '',
+      onSelect: (c, number) => _changePage(c, number),
+      fixedSize: numberButtonSize,
+      selectedTextColor: selectedNumberColor,
+      unSelectedTextColor: unSelectedNumberColor,
+      selectedButtonColor: selectedButtonColor,
+      unSelectedButtonColor: unSelectedButtonColor,
+      selectedNumberFontWeight: selectedNumberFontWeight,
+      buttonSelectedBorderColor: buttonSelectedBorderColor,
+      buttonUnSelectedBorderColor: buttonUnSelectedBorderColor,
+      enableInteraction: enableInteraction,
+    );
+  }
+
+  NumberButton _buildSeparatorDot() {
+    return NumberButton(
+      number: 0,
+      dot: "...",
+      buttonElevation: buttonElevation,
+      buttonRadius: buttonRadius,
+      fontSize: fontSize,
+      fontFamily: fontFamily ?? '',
+      onSelect: (c, number) {},
+      fixedSize: numberButtonSize,
+      selectedTextColor: selectedNumberColor,
+      unSelectedTextColor: unSelectedNumberColor,
+      selectedButtonColor: selectedButtonColor,
+      unSelectedButtonColor: unSelectedButtonColor,
+      selectedNumberFontWeight: selectedNumberFontWeight,
+      buttonSelectedBorderColor: buttonSelectedBorderColor,
+      buttonUnSelectedBorderColor: buttonUnSelectedBorderColor,
+      enableInteraction: true,
     );
   }
 
